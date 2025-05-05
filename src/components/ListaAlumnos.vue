@@ -21,7 +21,7 @@
       </div>
 
       <div class="mt-4">
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">
+        <button type="submit" class="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded">
           {{ form.id ? 'Actualizar' : 'Crear' }}
         </button>
         <button
@@ -52,7 +52,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id" class="border-b border-gray-700 hover:bg-gray-700">
+        <tr 
+        v-for="user in users" 
+        :key="user.id" 
+        class="border-b border-gray-700 hover:bg-gray-700"
+        @click="alumnoSeleccionadoId = alumnoSeleccionadoId === user.id ? null : user.id"
+        >
           <td
             v-for="campo in camposTabla"
             :key="campo"
@@ -61,8 +66,20 @@
             {{ user[campo] }}
           </td>
           <td class="py-3 text-center px-6">
-            <button @click="editarAlumno(user)" class="text-yellow-400 hover:text-yellow-300 mr-2">Editar</button>
-            <button @click="eliminarAlumno(user.id)" class="text-red-400 hover:text-red-300">Eliminar</button>
+            <div v-if="alumnoSeleccionadoId === user.id">
+              <button
+              @click.stop="editarAlumno(user)"
+              class="text-yellow-400 hover:text-yellow-300 mr-2"
+              >
+                Editar
+              </button>
+              <button
+              @click.stop="eliminarAlumno(user.id)"
+              class="text-red-400 hover:text-red-300"
+              >
+                Eliminar
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -82,6 +99,7 @@ export default {
       loading: true,
       error: null,
       mostrarFormulario: false,
+      alumnoSeleccionadoId: null,
       form: {
         id: null,
         nombre: '',
@@ -115,7 +133,7 @@ export default {
   capitalizar(texto) {
     return texto.charAt(0).toUpperCase() + texto.slice(1);
   },
-  
+
     cargarAlumnos() {
       this.loading = true;
       axios.get('http://localhost:8000/api/alumnos')
