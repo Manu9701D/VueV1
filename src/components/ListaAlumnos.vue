@@ -5,7 +5,7 @@
     <form
       v-if="mostrarFormulario"
       @submit.prevent="guardarAlumno"
-      class="mb-6 bg-gray-800 p-4 rounded-lg shadow text-white"
+      class="mb-6 bg-neutral-800 p-4 rounded-lg shadow text-white"
     >
       <div class="grid grid-cols-2 gap-4">
         <template v-for="(campo, index) in camposForm" :key="index">
@@ -14,21 +14,21 @@
             :type="campo === 'password' ? 'password' : campo === 'edad' ? 'number' : 'text'"
             v-model="form[campo]"
             :placeholder="capitalizar(campo)"
-            class="p-2 bg-gray-700 rounded"
+            class="p-2 bg-neutral-700 rounded"
             :required="campo === 'nombre' || campo === 'email' || campo === 'password' && !form.id"
           />
         </template>
       </div>
 
       <div class="mt-4">
-        <button type="submit" class="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">
           {{ form.id ? 'Actualizar' : 'Crear' }}
         </button>
         <button
           v-if="form.id"
           type="button"
           @click="cancelarEdicion"
-          class="ml-2 bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+          class="ml-2 bg-orange-600 hover:bg-yellow-700 px-4 py-2 rounded"
         >
           Cancelar edición
         </button>
@@ -39,13 +39,13 @@
         {{ mostrarFormulario ? 'Cerrar formulario' : 'Añadir alumno' }}
     </button>
 
-    <table class="min-w-full bg-gray-800 text-white shadow-md rounded-lg overflow-hidden">
-      <thead class="bg-gray-900">
+    <table class="min-w-full bg-neutral-800 text-white shadow-md rounded-lg overflow-hidden">
+      <thead class="bg-black">
         <tr>
           <th
             v-for="(columna, index) in columnas"
             :key="index"
-            class="py-3 px-6 text-center font-bold uppercase"
+            class="py-3 px-6 text-center font-bold uppercase text-white-300"
           >
           {{ columna }}
         </th>
@@ -55,7 +55,7 @@
         <tr 
         v-for="user in users" 
         :key="user.id" 
-        class="border-b border-gray-700 hover:bg-gray-700"
+        class="border-b border-neutral-700 hover:bg-neutral-700"
         @click="alumnoSeleccionadoId = alumnoSeleccionadoId === user.id ? null : user.id"
         >
           <td
@@ -66,25 +66,31 @@
             {{ user[campo] }}
           </td>
           <td class="py-3 text-center px-6">
-            <div v-if="alumnoSeleccionadoId === user.id">
+            <div class="flex justify-center items-center h-6 space-x-2">          
               <button
+              v-if="alumnoSeleccionadoId === user.id"
               @click.stop="editarAlumno(user)"
               class="text-yellow-400 hover:text-yellow-300 mr-2"
               >
                 Editar
               </button>
               <button
+              v-if="alumnoSeleccionadoId === user.id"
               @click.stop="eliminarAlumno(user.id)"
               class="text-red-400 hover:text-red-300"
               >
                 Eliminar
               </button>
+              <template v-else>
+                <span class="invisible">Editar</span>
+                <span class="invisible">Eliminar</span>
+              </template>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <div v-if="loading" class="text-center mt-4 text-gray-500">Cargando...</div>
+    <div v-if="loading" class="text-center mt-4 text-neutral-500">Cargando...</div>
     <div v-if="error" class="text-red-500 mt-4">{{ error }}</div>
   </div>
 </template>
