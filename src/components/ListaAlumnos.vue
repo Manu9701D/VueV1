@@ -45,7 +45,7 @@
           <th
             v-for="(columna, index) in columnas"
             :key="index"
-            class="py-3 px-6 text-center font-bold uppercase text-white-300"
+            class="py-3 px-6 text-center font-bold uppercase text-white"
           >
           {{ columna }}
         </th>
@@ -65,28 +65,25 @@
           >
             {{ user[campo] }}
           </td>
-          <td class="py-3 text-center px-6">
-            <div class="flex justify-center items-center h-6 space-x-2">          
+          <td class="py-3 px-6 text-center w-[120px]">
+            <div class="h-6 flex justify-center items-center space-x-2">
               <button
-              v-if="alumnoSeleccionadoId === user.id"
-              @click.stop="editarAlumno(user)"
-              class="text-yellow-400 hover:text-yellow-300 mr-2"
+                @click.stop="editarAlumno(user)"
+                class="text-yellow-400 hover:text-yellow-300"
+                :class="{ 'invisible': alumnoSeleccionadoId !== user.id }"
               >
                 Editar
               </button>
               <button
-              v-if="alumnoSeleccionadoId === user.id"
-              @click.stop="eliminarAlumno(user.id)"
-              class="text-red-400 hover:text-red-300"
+                @click.stop="eliminarAlumno(user.id)"
+                class="text-red-400 hover:text-red-300"
+                :class="{ 'invisible': alumnoSeleccionadoId !== user.id }"
               >
                 Eliminar
               </button>
-              <template v-else>
-                <span class="invisible">Editar</span>
-                <span class="invisible">Eliminar</span>
-              </template>
             </div>
-          </td>
+        </td>
+
         </tr>
       </tbody>
     </table>
