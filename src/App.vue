@@ -1,11 +1,16 @@
 <script setup>
-import ListaAlumnos from './components/ListaAlumnos.vue'
+import ListaAlumnos from "./components/ListaAlumnos.vue";
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-    <h1 class="text-2xl font-bold">Gestión de Alumnos</h1>
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="./components/icons/logo.png"
+      width="200"
+      height="200"
+    />
   </header>
 
   <main>
